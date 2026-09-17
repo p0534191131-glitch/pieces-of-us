@@ -3,10 +3,10 @@ export function loadImage(src: string): Promise<HTMLImageElement> {
     const img = new Image();
     img.decoding = "async";
     img.onload = () => {
-      img
-        .decode()
-        .catch(() => undefined)
-        .finally(() => resolve(img));
+      // מפענחים מראש כדי שהציור הראשון יהיה חלק — אבל לא מחכים לזה:
+      // בלשונית שהדפדפן ממתן (למשל ברקע) decode() יכול להיתקע עשרות שניות
+      void img.decode().catch(() => undefined);
+      resolve(img);
     };
     img.onerror = () => reject(new Error(`image failed to load: ${src}`));
     img.src = src;

@@ -616,6 +616,8 @@ async function scoreLibrary() {
   let changed = false;
   for (const photo of getGame().library) {
     if (photo.detail !== undefined) continue;
+    // התמונות של השלב קודמות לדירוג הפרטים — אחרת ההכנה למשחק מחכה בתור מאחורי כל הספרייה
+    while (getGame().assetsLoading) await new Promise((resolve) => window.setTimeout(resolve, 250));
     const url = libraryThumb(photo);
     if (!url) continue;
     try {
