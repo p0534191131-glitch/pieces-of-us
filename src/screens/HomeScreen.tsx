@@ -30,6 +30,8 @@ export default function HomeScreen() {
   const [code, setCode] = useState(invitedCode);
 
   const localServerMissing = transportKind() === "local-server" && serverChecked && !serverInfo;
+  /** רץ מהמחשב הביתי, או מאתר בענן? ההודעה כשאין שרת שונה בין השניים */
+  const onHomeNetwork = /^(localhost|127\.0\.0\.1|\[::1\]|10\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.)/.test(location.hostname);
 
   const requireName = () => {
     if (profile.name.trim()) return true;
@@ -212,7 +214,17 @@ export default function HomeScreen() {
           )}
           {localServerMissing && (
             <p className="mt-3 rounded-xl bg-gold/10 p-3 text-sm leading-relaxed text-gold">
-              שרת המשחק לא פועל. במחשב המארח מפעילים את <b>חלקים מאיתנו - הפעלה.cmd</b> (או <code className="isolate-ltr">npm run play</code>).
+              {onHomeNetwork ? (
+                <>
+                  שרת המשחק לא פועל. במחשב המארח מפעילים את <b>חלקים מאיתנו - הפעלה.cmd</b> (או{" "}
+                  <code className="isolate-ltr">npm run play</code>).
+                </>
+              ) : (
+                <>
+                  המשחק עלה לאוויר, אבל החיבור בזמן אמת עוד לא הופעל. צריך להדליק <b>Lovable Cloud</b> ולפרסם מחדש — ואז אפשר לשחק
+                  מכל מקום. בינתיים אפשר <b>אימון לבד</b>.
+                </>
+              )}
             </p>
           )}
 
