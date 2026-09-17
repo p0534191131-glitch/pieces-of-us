@@ -1,0 +1,332 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * חלקים מאיתנו — מערכת העיצוב
+ * כל הצבעים הם טוקנים של HSL (מוסכמת shadcn/Lovable). לא משתמשים בצבעים קשיחים ברכיבים.
+ */
+@layer base {
+  :root {
+    --background: 322 47% 5%;
+    --background-2: 330 46% 9%;
+    --foreground: 340 100% 96%;
+
+    --card: 326 36% 11%;
+    --card-foreground: 340 100% 96%;
+    --popover: 326 42% 9%;
+    --popover-foreground: 340 100% 96%;
+
+    --primary: 343 100% 68%;
+    --primary-deep: 342 82% 54%;
+    --primary-foreground: 330 70% 7%;
+    --secondary: 326 30% 17%;
+    --secondary-foreground: 340 70% 92%;
+    --muted: 326 26% 15%;
+    --muted-foreground: 332 22% 72%;
+    --accent: 39 92% 72%;
+    --accent-foreground: 330 70% 7%;
+    --destructive: 354 88% 62%;
+    --destructive-foreground: 0 0% 100%;
+    --success: 152 66% 56%;
+    --ice: 195 90% 82%;
+
+    --border: 330 28% 24%;
+    --input: 330 28% 24%;
+    --ring: 343 100% 68%;
+    --radius: 1.1rem;
+
+    --gold: 39 92% 72%;
+    --gold-deep: 30 78% 52%;
+
+    /* צבעי שחקנים */
+    --player-rose: 343 100% 68%;
+    --player-gold: 39 96% 62%;
+    --player-violet: 266 92% 76%;
+    --player-teal: 170 74% 50%;
+    --player-sky: 205 96% 64%;
+    --player-lime: 96 68% 58%;
+
+    /* מוחלפים לכל רכיב: pc = אני, po = היריב/ה */
+    --pc: var(--player-rose);
+    --po: var(--player-gold);
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    color-scheme: dark;
+    -webkit-tap-highlight-color: transparent;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-background font-sans text-foreground antialiased;
+    min-height: 100dvh;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background: hsl(var(--primary) / 0.35);
+    color: hsl(var(--foreground));
+  }
+
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--foreground) / 0.14);
+    border-radius: 999px;
+    border: 3px solid transparent;
+    background-clip: padding-box;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
+
+@layer components {
+  .glass {
+    background: linear-gradient(160deg, hsl(var(--card) / 0.82), hsl(var(--card) / 0.55));
+    -webkit-backdrop-filter: blur(18px) saturate(1.25);
+    backdrop-filter: blur(18px) saturate(1.25);
+    border: 1px solid hsl(var(--foreground) / 0.09);
+    box-shadow:
+      0 30px 80px -30px hsl(var(--background) / 0.95),
+      inset 0 1px 0 hsl(var(--foreground) / 0.06);
+  }
+
+  .glass-soft {
+    background: hsl(var(--foreground) / 0.04);
+    border: 1px solid hsl(var(--foreground) / 0.08);
+  }
+
+  .text-love {
+    background-image: linear-gradient(
+      100deg,
+      hsl(var(--primary)) 0%,
+      hsl(var(--gold)) 45%,
+      hsl(var(--primary)) 90%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: pou-shine 7s linear infinite;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    border-radius: 999px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    line-height: 1.25rem;
+    font-weight: 500;
+    background: hsl(var(--foreground) / 0.06);
+    border: 1px solid hsl(var(--foreground) / 0.08);
+  }
+
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* מספרים, שעונים וכתובות בתוך טקסט עברי */
+  .isolate-ltr {
+    direction: ltr;
+    unicode-bidi: isolate;
+  }
+}
+
+@keyframes pou-shine {
+  to {
+    background-position: 200% center;
+  }
+}
+
+/* ---------------- רקע חי ---------------- */
+
+.ambient-base {
+  background: radial-gradient(1200px 820px at 50% -12%, hsl(var(--background-2)), hsl(var(--background)) 68%);
+}
+
+.ambient-orb {
+  position: absolute;
+  border-radius: 9999px;
+  will-change: transform;
+  transition: opacity 1.2s ease;
+}
+
+.ambient-orb-rose {
+  width: 70vmax;
+  height: 70vmax;
+  left: -22vmax;
+  top: -30vmax;
+  background: radial-gradient(circle, hsl(var(--primary) / 0.24), transparent 62%);
+  animation: aurora 26s ease-in-out infinite;
+}
+
+.ambient-orb-gold {
+  width: 60vmax;
+  height: 60vmax;
+  right: -20vmax;
+  bottom: -28vmax;
+  background: radial-gradient(circle, hsl(var(--gold) / 0.13), transparent 62%);
+  animation: aurora 32s ease-in-out infinite reverse;
+}
+
+.ambient-orb-violet {
+  width: 50vmax;
+  height: 50vmax;
+  right: 8vmax;
+  top: -18vmax;
+  background: radial-gradient(circle, hsl(var(--player-violet) / 0.12), transparent 62%);
+  animation: aurora 38s ease-in-out infinite;
+}
+
+.ambient-vignette {
+  background: radial-gradient(ellipse at center, transparent 45%, hsl(var(--background) / 0.75));
+}
+
+@keyframes aurora {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  33% {
+    transform: translate3d(6vmax, 4vmax, 0) scale(1.08);
+  }
+  66% {
+    transform: translate3d(-4vmax, 7vmax, 0) scale(0.94);
+  }
+}
+
+@keyframes kenburns {
+  from {
+    transform: scale(1.14);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* ---------------- הלוגו: ארבעה חלקי פאזל שמתחברים ללב ---------------- */
+
+.logo-piece,
+.logo-heart {
+  transform-box: view-box;
+  transform-origin: 50px 45px;
+}
+
+.logo-anim .logo-tl {
+  animation: logo-tl 5.2s cubic-bezier(0.5, 0, 0.2, 1) infinite;
+}
+.logo-anim .logo-tr {
+  animation: logo-tr 5.2s cubic-bezier(0.5, 0, 0.2, 1) infinite;
+}
+.logo-anim .logo-bl {
+  animation: logo-bl 5.2s cubic-bezier(0.5, 0, 0.2, 1) infinite;
+}
+.logo-anim .logo-br {
+  animation: logo-br 5.2s cubic-bezier(0.5, 0, 0.2, 1) infinite;
+}
+.logo-anim .logo-heart {
+  animation: logo-beat 5.2s ease-in-out infinite;
+}
+
+@keyframes logo-tl {
+  0%,
+  8% {
+    transform: translate(-7px, -6px) rotate(-7deg);
+  }
+  26%,
+  84% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  100% {
+    transform: translate(-7px, -6px) rotate(-7deg);
+  }
+}
+@keyframes logo-tr {
+  0%,
+  10% {
+    transform: translate(7px, -7px) rotate(8deg);
+  }
+  28%,
+  84% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  100% {
+    transform: translate(7px, -7px) rotate(8deg);
+  }
+}
+@keyframes logo-bl {
+  0%,
+  12% {
+    transform: translate(-6px, 7px) rotate(6deg);
+  }
+  30%,
+  84% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  100% {
+    transform: translate(-6px, 7px) rotate(6deg);
+  }
+}
+@keyframes logo-br {
+  0%,
+  14% {
+    transform: translate(8px, 6px) rotate(-6deg);
+  }
+  32%,
+  84% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  100% {
+    transform: translate(8px, 6px) rotate(-6deg);
+  }
+}
+@keyframes logo-beat {
+  0%,
+  34% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.07);
+  }
+  46% {
+    transform: scale(1);
+  }
+  52% {
+    transform: scale(1.045);
+  }
+  60%,
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}

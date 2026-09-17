@@ -1,0 +1,10 @@
+node_modules
+dist
+*.log
+.env
+.env.local
+.DS_Store
+
+# תמונות אישיות נשארות על המחשב ולא עולות למאגר
+photos/*
+!photos/README.md

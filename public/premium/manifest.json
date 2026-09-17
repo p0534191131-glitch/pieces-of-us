@@ -1,0 +1,10 @@
+{
+  "title": "אוסף הפרימיום",
+  "note": "נוצרו ב-Seedream 5 Pro. להוספת תמונה: שמים JPG מרובע בתיקייה הזו ומוסיפים שורה כאן.",
+  "photos": [
+    { "file": "jerusalem-golden-hour.jpg", "title": "ירושלים בשעת הזהב" },
+    { "file": "patisserie-for-two.jpg", "title": "פטיסרי לשניים" },
+    { "file": "tzfat-blue-alley.jpg", "title": "סמטה כחולה בצפת" },
+    { "file": "flower-market.jpg", "title": "שוק הפרחים" }
+  ]
+}
