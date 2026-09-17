@@ -60,6 +60,11 @@ export function transportKind(): Transport["kind"] {
   return supabaseConfig() ? "supabase" : "local-server";
 }
 
+/** האם הדף נפתח מהרשת הביתית? באתר בענן ההודעות על "אין שרת" צריכות להיות אחרות */
+export function isHomeNetwork(): boolean {
+  return /^(localhost|127\.0\.0\.1|\[::1\]|10\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.)/.test(location.hostname);
+}
+
 export async function createTransport(): Promise<Transport> {
   const supabase = supabaseConfig();
   if (supabase) {

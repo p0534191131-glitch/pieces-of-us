@@ -1,4 +1,4 @@
-import { createTransport, JoinFailure, transportKind, type Member, type NetStatus, type Transport } from "@/net/transport";
+import { createTransport, isHomeNetwork, JoinFailure, transportKind, type Member, type NetStatus, type Transport } from "@/net/transport";
 import { MatchEngine, sanitizeProfile, SNAPSHOT_VERSION, type EngineHooks, type EngineSnapshot, type StartResult } from "./engine";
 import { fetchFolderPhotos, fetchPremiumPhotos, forgetUpload, importUploads, loadStoredUploads, planPhotos } from "./photos";
 import { getGame, PROFILE_KEY, setGame, type ToastItem } from "./store";
@@ -81,9 +81,10 @@ function errorText(err: unknown): string {
     case "bad-request":
       return "קוד חדר הוא 4 ספרות.";
     default:
-      return transportKind() === "local-server"
+      if (transportKind() !== "local-server") return "אין חיבור לשרת. בדקו את החיבור לאינטרנט ונסו שוב.";
+      return isHomeNetwork()
         ? "אין חיבור לשרת המשחק. ודאו שהוא פועל במחשב המארח (npm run play) ושהמחשבים באותה רשת."
-        : "אין חיבור לשרת. בדקו את החיבור לאינטרנט ונסו שוב.";
+        : "המשחק עוד לא חובר לשרת בזמן אמת, אז אי אפשר לפתוח חדר. צריך להדליק Lovable Cloud ולפרסם מחדש — בינתיים אפשר לשחק ב״אימון לבד״.";
   }
 }
 

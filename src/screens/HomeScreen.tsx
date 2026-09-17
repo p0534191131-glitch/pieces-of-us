@@ -7,7 +7,7 @@ import { SoundToggles } from "@/components/SoundToggles";
 import { AVATARS, COLOR_NAME, COLOR_ORDER, COLOR_VAR } from "@/game/constants";
 import { createRoom, joinRoom, openSolo, updateProfile } from "@/game/controller";
 import { useGame } from "@/game/store";
-import { transportKind } from "@/net/transport";
+import { isHomeNetwork, transportKind } from "@/net/transport";
 import { sound } from "@/lib/sound";
 import { cn } from "@/lib/utils";
 import { FieldLabel } from "./shared";
@@ -31,7 +31,7 @@ export default function HomeScreen() {
 
   const localServerMissing = transportKind() === "local-server" && serverChecked && !serverInfo;
   /** רץ מהמחשב הביתי, או מאתר בענן? ההודעה כשאין שרת שונה בין השניים */
-  const onHomeNetwork = /^(localhost|127\.0\.0\.1|\[::1\]|10\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.)/.test(location.hostname);
+  const onHomeNetwork = isHomeNetwork();
 
   const requireName = () => {
     if (profile.name.trim()) return true;
